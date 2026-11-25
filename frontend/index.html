@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Farm Advisor | ರೈತ ಸಲಹೆಗಾರ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>🌾 Farm Advisor <span lang="kn">ರೈತ ಸಲಹೆಗಾರ</span></h1>
+    <p class="tag">Water and market-price help. Not for pesticide, fertiliser or disease advice.</p>
+  </header>
+
+  <main>
+    <!-- 1. Profile -->
+    <section class="panel" aria-labelledby="profile-h">
+      <h2 id="profile-h">Your farm <span lang="kn">ನಿಮ್ಮ ಹೊಲ</span></h2>
+
+      <fieldset class="field">
+        <legend>Crop <span lang="kn">ಬೆಳೆ</span></legend>
+        <div id="crop-buttons" class="pic-grid" role="radiogroup" aria-label="Crop"></div>
+      </fieldset>
+
+      <label class="field">Nearest town / mandi <span lang="kn">ಹತ್ತಿರದ ಮಂಡಿ</span>
+        <select id="location"></select>
+      </label>
+
+      <label class="field">Sowing date <span lang="kn">ಬಿತ್ತನೆ ದಿನಾಂಕ</span>
+        <input type="date" id="sowing_date">
+      </label>
+
+      <label class="field">Soil <span lang="kn">ಮಣ್ಣು</span>
+        <select id="soil_type"></select>
+      </label>
+
+      <label class="field">Water source <span lang="kn">ನೀರಿನ ಮೂಲ</span>
+        <select id="water_source">
+          <option value="borewell">Borewell / ಕೊಳವೆ ಬಾವಿ</option>
+          <option value="canal">Canal / ಕಾಲುವೆ</option>
+          <option value="tank">Tank / ಕೆರೆ</option>
+          <option value="rainfed">Rain only / ಮಳೆ ಮಾತ್ರ</option>
+        </select>
+      </label>
+
+      <label class="field">Area (acres) <span lang="kn">ವಿಸ್ತೀರ್ಣ (ಎಕರೆ)</span>
+        <input type="number" id="area_acres" min="0" step="0.1" inputmode="decimal" placeholder="e.g. 2">
+      </label>
+
+      <label class="field">Answer language <span lang="kn">ಭಾಷೆ</span>
+        <select id="language">
+          <option value="kn">ಕನ್ನಡ</option>
+          <option value="en">English</option>
+        </select>
+      </label>
+      <p class="note">Only your nearest town is used (rounded). No exact location is sent.</p>
+    </section>
+
+    <!-- 2. Question -->
+    <section class="panel" aria-labelledby="ask-h">
+      <h2 id="ask-h">Ask a question <span lang="kn">ಪ್ರಶ್ನೆ ಕೇಳಿ</span></h2>
+      <label class="field">
+        <span class="sr-only">Your question</span>
+        <textarea id="question" rows="3" placeholder="Should I water my crop today?  /  ಇಂದು ನೀರು ಹಾಯಿಸಬೇಕೇ?"></textarea>
+      </label>
+      <div class="row">
+        <button id="ask-btn" class="btn primary" type="button">Get advice <span lang="kn">ಸಲಹೆ ಪಡೆಯಿರಿ</span></button>
+        <button id="mic-btn" class="btn" type="button" aria-pressed="false">🎤 <span id="mic-label">Speak</span></button>
+      </div>
+      <p id="mic-msg" class="note" role="status"></p>
+      <audio id="playback" controls hidden></audio>
+      <div id="mock-bar" class="row" hidden>
+        <span class="note">Sample mode:</span>
+        <button class="btn small" type="button" data-sample="sample_irrigation.json">Irrigation sample</button>
+        <button class="btn small" type="button" data-sample="sample_price.json">Price sample</button>
+      </div>
+    </section>
+
+    <!-- 3. Crop confirmation (shown only when the backend asks) -->
+    <section id="confirm" class="panel confirm" hidden aria-live="polite">
+      <h2>Which crop? <span lang="kn">ಯಾವ ಬೆಳೆ?</span></h2>
+      <div id="confirm-buttons" class="pic-grid"></div>
+    </section>
+
+    <!-- 4. Result -->
+    <section id="result" class="panel" aria-live="polite" hidden>
+      <div id="state-loading" class="state" hidden>⏳ Checking… <span lang="kn">ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ…</span></div>
+      <div id="state-error" class="state error" hidden></div>
+
+      <article id="card" hidden>
+        <div class="badge-row">
+          <span id="badge" class="badge"></span>
+          <span id="freshness" class="chip"></span>
+        </div>
+        <p id="msg-local" class="msg" lang="kn"></p>
+        <p id="msg-en" class="msg en"></p>
+
+        <ul id="reasons" class="reasons"></ul>
+
+        <p id="stale-warning" class="stale" hidden></p>
+        <p id="expert" class="expert" hidden></p>
+
+        <p class="meta"><strong>Source:</strong> <span id="source"></span></p>
+        <p class="meta"><strong>Data time:</strong> <span id="timestamp"></span></p>
+        <p class="meta"><strong>Confidence:</strong> <span id="confidence"></span></p>
+
+        <details id="why">
+          <summary>Why? <span lang="kn">ಏಕೆ?</span></summary>
+          <h3>Reasons</h3>
+          <ul id="why-reasons"></ul>
+          <h3>Assumptions</h3>
+          <ul id="why-assumptions"></ul>
+        </details>
+        <audio id="reply-audio" controls hidden></audio>
+      </article>
+    </section>
+  </main>
+
+  <footer>Advice is guidance only. Soil moisture is modelled, not measured.</footer>
+  <script src="app.js"></script>
+</body>
+</html>
