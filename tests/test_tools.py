@@ -218,3 +218,33 @@ def test_soil_lookup_and_percent_values(ref):
 def test_root_depth(ref):
     assert crop_rules.get_root_depth("Maize", ref["crops"]) == (0.8, False)
     assert crop_rules.get_root_depth("Unknown", ref["crops"]) == (0.5, True)
+
+
+# ------------------------------------------------------------- mandi.list_markets
+def test_list_markets_returns_exact_names_sorted():
+    resp = {"records": [{"market": "Kolar"}, {"market": "Bangalore"}, {"market": "Kolar"}, {"market": ""}]}
+    r = mandi.list_markets("Tomato", api_key="k", http_get=lambda *a: resp)
+    assert r == {"status": "ok", "commodity": "Tomato", "state": "Karnataka",
+                 "markets": ["Bangalore", "Kolar"]}
+
+
+def test_list_markets_errors(monkeypatch):
+    monkeypatch.delenv("DATA_GOV_API_KEY", raising=False)
+    assert mandi.list_markets("Tomato")["error"] == "no_api_key"
+    assert mandi.list_markets("Tomato", api_key="k", http_get=lambda *a: {"records": []})["error"] == "no_records"
+    assert mandi.list_markets("Tomato", api_key="k", http_get=lambda *a: {"x": 1})["error"] == "bad_response"
+
+    def boom(*a):
+        raise mandi.MandiError("timeout", "slow")
+    assert mandi.list_markets("Tomato", api_key="k", http_get=boom)["error"] == "timeout"
+
+
+# ------------------------------------------------------- depletion fraction (crop_rules)
+def test_depletion_fraction_from_csv_and_default():
+    crops = [{"crop_name_en": "Tomato", "depletion_fraction": "0.40"},
+             {"crop_name_en": "Bad", "depletion_fraction": "7"},
+             {"crop_name_en": "Empty", "depletion_fraction": ""}]
+    assert crop_rules.get_depletion_fraction("tomato", crops, 0.5) == (0.40, False)
+    assert crop_rules.get_depletion_fraction("Bad", crops, 0.5) == (0.5, True)
+    assert crop_rules.get_depletion_fraction("Empty", crops, 0.5) == (0.5, True)
+    assert crop_rules.get_depletion_fraction("Nope", crops, 0.5) == (0.5, True)

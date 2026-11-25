@@ -20,6 +20,7 @@ get_stage(crop, sowing_date, today, calendar)
         | "bad_date", "message": ...}
 get_soil(soil_type, soils)  -> {"soil_type","field_capacity","wilting_point","source"} or None
 get_root_depth(crop, crops) -> (metres, is_default)
+get_depletion_fraction(crop, crops, default) -> (p, is_default)   # optional depletion_fraction column
 """
 from __future__ import annotations
 
@@ -123,3 +124,19 @@ def get_root_depth(crop, crops: list[dict]) -> tuple[float, bool]:
             except ValueError:
                 pass
     return DEFAULT_ROOT_DEPTH_M, True
+
+
+def get_depletion_fraction(crop, crops: list[dict], default: float) -> tuple[float, bool]:
+    """Share of available soil water the crop may use before stress (FAO-56 Table 22 'p').
+
+    Reads the optional crops.csv column depletion_fraction; must be 0.1-0.9, else `default`.
+    """
+    for row in crops:
+        if _norm(row.get("crop_name_en", "")) == _norm(crop or ""):
+            try:
+                p = float(row.get("depletion_fraction", ""))
+                if 0.1 <= p <= 0.9:
+                    return p, False
+            except ValueError:
+                pass
+    return default, True

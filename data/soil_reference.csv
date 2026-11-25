@@ -1,5 +1,5 @@
 soil_type,field_capacity,wilting_point,source
 sandy_loam,0.23,0.11,FAO-56 Table 19 midpoint of range (FC 0.18-0.28; WP 0.06-0.16) - APPROXIMATE verify
 loam,0.25,0.12,FAO-56 Table 19 midpoint of range (FC 0.20-0.30; WP 0.07-0.17) - APPROXIMATE verify
-clay_loam,0.34,0.21,FAO-56 Table 19 midpoint of range (FC 0.30-0.37; WP 0.17-0.24) - APPROXIMATE verify
+clay_loam,0.34,0.21,FAO-56 Table 19 has no clay loam row; midpoint of the Silt clay loam row used as a proxy (FC 0.30-0.37; WP 0.17-0.24) - APPROXIMATE
 black_clay,0.36,0.22,FAO-56 Table 19 clay midpoint (FC 0.32-0.40; WP 0.20-0.24) - APPROXIMATE verify

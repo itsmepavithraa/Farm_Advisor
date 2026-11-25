@@ -1,5 +1,5 @@
-crop_name_en,crop_name_kn,aliases,kc_initial,kc_mid,kc_end,season,root_depth_m,source
-Ragi,ರಾಗಿ,finger millet;ragi;raagi;nachni,0.30,1.00,0.30,kharif,0.5,FAO-56 Table 12 (millet); root depth FAO-56 Table 22 range - APPROXIMATE verify
-Maize,ಮೆಕ್ಕೆಜೋಳ,corn;maize;makke jola;mekkejola;gombu jola,0.30,1.20,0.60,kharif,0.8,FAO-56 Table 12 (maize grain); root depth FAO-56 Table 22 - APPROXIMATE verify
-Tomato,ಟೊಮೇಟೊ,tomato;tamatar;thakkali;tomatto,0.60,1.15,0.80,rabi,0.6,FAO-56 Table 12; root depth FAO-56 Table 22 - APPROXIMATE verify
-Groundnut,ಕಡಲೆಕಾಯಿ,groundnut;peanut;kadalekai;mungfali;nelagadale,0.40,1.15,0.60,kharif,0.5,FAO-56 Table 12 (groundnut/peanut); root depth FAO-56 Table 22 - APPROXIMATE verify
+crop_name_en,crop_name_kn,aliases,kc_initial,kc_mid,kc_end,season,root_depth_m,depletion_fraction,source
+Ragi,ರಾಗಿ,finger millet;ragi;raagi;nachni,0.30,1.00,0.30,kharif,1.0,0.55,Kc mid/end FAO-56 Table 12 (millet); Kc initial not checked (image in source); root depth = lower end of FAO-56 Table 22 range 1.0-2.0 m; p FAO-56 Table 22 - generic values, see notes/DATA_REVIEW.md
+Maize,ಮೆಕ್ಕೆಜೋಳ,corn;maize;makke jola;mekkejola;gombu jola,0.30,1.20,0.60,kharif,1.0,0.55,Kc mid/end FAO-56 Table 12 (maize grain; end 0.60 = harvest at high grain moisture); Kc initial not checked; root depth = lower end of Table 22 range 1.0-1.7 m; p Table 22 - generic values, see notes/DATA_REVIEW.md
+Tomato,ಟೊಮೇಟೊ,tomato;tamatar;thakkali;tomatto,0.60,1.15,0.80,rabi,0.7,0.40,Kc mid/end FAO-56 Table 12 (tomato; end range 0.70-0.90); Kc initial not checked; root depth = lower end of Table 22 range 0.7-1.5 m; p Table 22 - generic values, see notes/DATA_REVIEW.md
+Groundnut,ಕಡಲೆಕಾಯಿ,groundnut;peanut;kadalekai;mungfali;nelagadale,0.40,1.15,0.60,kharif,0.5,0.50,Kc mid/end FAO-56 Table 12 (groundnut); Kc initial not checked; root depth = lower end of Table 22 range 0.5-1.0 m; p Table 22 - generic values, see notes/DATA_REVIEW.md

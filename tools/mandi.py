@@ -17,6 +17,8 @@ A RECORDED SAMPLE (data/recorded_mandi_sample.json) is used only when the caller
 passes allow_recorded_sample=True, and is labelled freshness="recorded_sample".
 
 nearest_mandis(lat, lon, csv_path, n=3) ranks mandis.csv rows by distance.
+list_markets(commodity, state) returns the market names Agmarknet itself uses (to check
+mandis.csv spellings); see dev_checks/check_mandi_names.py.
 """
 from __future__ import annotations
 
@@ -176,3 +178,32 @@ def nearest_mandis(lat: float, lon: float, csv_path, n: int = 3) -> list[dict]:
             km = 6371 * 2 * math.asin(math.sqrt(a))
             rows.append({**r, "distance_km": round(km, 1)})
     return sorted(rows, key=lambda r: r["distance_km"])[:n]
+
+
+def list_markets(commodity: str, state: str = "Karnataka", *, timeout: float = 15,
+                 http_get=None, api_key: str | None = None) -> dict:
+    """Distinct market names exactly as the live API spells them for a commodity.
+
+    Returns {"status": "ok", "markets": [...sorted names...]} or
+    {"status": "error", "error": code, "message": ...} (no_api_key, timeout, network_error,
+    bad_response, no_records). Not cached: meant for one-off verification of mandis.csv.
+    """
+    api_key = api_key or os.environ.get("DATA_GOV_API_KEY")
+    if not api_key:
+        return {"status": "error", "error": "no_api_key",
+                "message": "Set DATA_GOV_API_KEY (free key from data.gov.in)"}
+    params = {"api-key": api_key, "format": "json", "limit": 1000,
+              "filters[state.keyword]": state, "filters[commodity]": commodity}
+    try:
+        raw = (http_get or _default_http_get)(API_URL, params, timeout)
+        records = raw.get("records") if isinstance(raw, dict) else None
+        if not isinstance(records, list):
+            raise MandiError("bad_response", "Response has no 'records' list")
+    except MandiError as e:
+        return {"status": "error", "error": e.code, "message": e.message}
+    names = sorted({str(r.get("market") or r.get("Market") or "").strip()
+                    for r in records if isinstance(r, dict)} - {""})
+    if not names:
+        return {"status": "error", "error": "no_records",
+                "message": f"No markets reported {commodity} in {state} today"}
+    return {"status": "ok", "commodity": commodity, "state": state, "markets": names}

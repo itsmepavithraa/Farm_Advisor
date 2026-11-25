@@ -207,3 +207,16 @@ def test_no_pesticide_or_fertiliser_advice(profile, reference):
 def test_timestamp_and_source_present(profile, reference):
     r = run(profile, reference, make_weather())
     assert r["data_timestamp"] == NOW.isoformat() and "Open-Meteo" in r["source"]
+
+
+# ---------------------------------------------------------------- per-crop depletion fraction
+def test_crop_depletion_fraction_moves_the_trigger(profile, reference):
+    reference["crops"][0]["depletion_fraction"] = "0.40"     # trigger 40 mm instead of 50 mm
+    r = run(profile, reference, five_days(9), last_irrigation_date=irrigated(6))   # 45 mm used
+    assert r["values"]["raw_trigger_mm"] == 40.0 and r["decision"] == "IRRIGATE_NOW"
+    assert any("40%" in a and "FAO-56" in a for a in r["assumptions"])
+
+
+def test_default_depletion_fraction_is_stated(profile, reference):
+    r = run(profile, reference, make_weather())
+    assert r["values"]["raw_trigger_mm"] == 50.0 and any("50%" in a and "default" in a for a in r["assumptions"])

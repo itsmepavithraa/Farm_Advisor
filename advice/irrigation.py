@@ -8,7 +8,9 @@ HOW IT WORKS, IN PLAIN WORDS
      crop has used up. Each day: depletion = depletion + crop water use - effective rain,
      never below 0 (full) and never above TAW (empty).
   4. TAW (total available water, mm) = (field capacity - wilting point) x root depth x 1000.
-     RAW (the trigger) = 50% of TAW: past this the crop starts to be water-stressed.
+     RAW (the trigger) = p x TAW, where p is the crop's depletion fraction (crops.csv
+     depletion_fraction, FAO-56 Table 22; 0.5 if the column is empty). Past it the crop
+     starts to be water-stressed.
   5. Decision
        IRRIGATE_NOW        depletion today >= RAW (and no rain forecast that refills it)
        IRRIGATE_SOON       depletion is projected to reach RAW within today/tomorrow
@@ -36,7 +38,7 @@ from datetime import date, datetime, timedelta
 from advice import crop_rules
 from tools import cache, weather as weather_tool
 
-RAW_FRACTION = 0.5               # share of available water the crop may use before stress
+RAW_FRACTION = 0.5               # default share of available water usable before stress (crops.csv can override per crop)
 EFFECTIVE_RAIN = 0.8             # share of rainfall that reaches the root zone
 HISTORY_DAYS = 7                 # days of past weather used to build the water balance
 SOON_HORIZON_DAYS = 2            # "soon" = today or tomorrow
@@ -129,7 +131,8 @@ def decide_irrigation(profile: dict, weather: dict, reference: dict,
     # ---- 4. water balance
     depth_m, depth_default = crop_rules.get_root_depth(crop, reference["crops"])
     taw = (soil["field_capacity"] - soil["wilting_point"]) * depth_m * 1000
-    raw = RAW_FRACTION * taw
+    p, p_default = crop_rules.get_depletion_fraction(crop, reference["crops"], RAW_FRACTION)
+    raw = p * taw
 
     def kc_on(day):
         st = crop_rules.get_stage(crop, sown, day, reference["calendar"])
@@ -192,8 +195,8 @@ def decide_irrigation(profile: dict, weather: dict, reference: dict,
                    f"Soil: {soil['soil_type']} (field capacity {soil['field_capacity']:.2f}, "
                    f"wilting point {soil['wilting_point']:.2f}); root depth {depth_m} m"
                    f"{' (default, not in crops.csv)' if depth_default else ''}.",
-                   f"Irrigation is triggered when {int(RAW_FRACTION * 100)}% of the available "
-                   f"soil water is used; {int(EFFECTIVE_RAIN * 100)}% of rainfall is counted as effective."]
+                   f"Irrigation is triggered when {round(p * 100)}% of the available "
+                   f"soil water is used{' (default)' if p_default else ' (FAO-56 value for this crop)'}; {int(EFFECTIVE_RAIN * 100)}% of rainfall is counted as effective."]
     assumptions.append(f"Soil assumed full after your last irrigation on {last_irr}." if last_irr
                        else f"Soil assumed full at the start of the weather window ({start}) unless "
                             f"rain in the window refilled it; give the last irrigation date to improve this.")
