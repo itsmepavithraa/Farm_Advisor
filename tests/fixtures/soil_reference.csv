@@ -1,0 +1,5 @@
+soil_type,field_capacity,wilting_point,source
+sandy_loam,0.23,0.10,PLACEHOLDER approx FAO-56 Table 19 - verify
+loam,0.25,0.12,PLACEHOLDER approx FAO-56 Table 19 - verify
+clay_loam,0.32,0.20,PLACEHOLDER approx FAO-56 Table 19 - verify
+black_clay,0.36,0.22,PLACEHOLDER approx FAO-56 Table 19 - verify

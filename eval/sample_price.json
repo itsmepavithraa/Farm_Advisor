@@ -1,0 +1,19 @@
+{
+  "status": "ok",
+  "intent": "MARKET_PRICE",
+  "decision": "ABOVE_RECENT",
+  "message_en": "Tomato at Kolar mandi is Rs 2,300 per quintal (25 Nov), higher than the recent average.",
+  "message_local": "ಕೋಲಾರ ಮಂಡಿಯಲ್ಲಿ ಟೊಮೇಟೊ ಕ್ವಿಂಟಾಲ್‌ಗೆ ₹2,300 (25 ನವೆಂಬರ್), ಇತ್ತೀಚಿನ ಸರಾಸರಿಗಿಂತ ಹೆಚ್ಚು.",
+  "reasons": [
+    "On 2026-11-25 the modal price at Kolar was Rs 2300 per quintal, 15.0% above the average of Rs 2000 over the previous 5 reported days.",
+    "This may be a reasonable time to sell, but prices can change from day to day."
+  ],
+  "source": "Agmarknet (data.gov.in)",
+  "data_timestamp": "2026-11-25",
+  "freshness": "live",
+  "confidence": "medium",
+  "assumptions": [
+    "Comparison is with the recent average only; this is not a price forecast."
+  ],
+  "audio_url": null
+}

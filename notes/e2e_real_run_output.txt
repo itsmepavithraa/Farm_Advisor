@@ -1,0 +1,18 @@
+Reference data: D:\Farm_Advisor_Pavithra\tests\fixtures
+
+WEATHER status=ok freshness=live retrieved_at=2026-11-25T04:23:57.976770+00:00
+   {'date': '2026-11-22', 'rain_mm': 0.0, 'et0_mm': 5.01, 'temp_max_c': 28.9}
+   {'date': '2026-11-23', 'rain_mm': 0.0, 'et0_mm': 4.8, 'temp_max_c': 29.8}
+   {'date': '2026-11-24', 'rain_mm': 11.2, 'et0_mm': 3.24, 'temp_max_c': 28.4}
+   {'date': '2026-11-25', 'rain_mm': 9.4, 'et0_mm': 2.6, 'temp_max_c': 26.8}
+   {'date': '2026-11-26', 'rain_mm': 2.8, 'et0_mm': 2.81, 'temp_max_c': 26.3}
+   {'date': '2026-11-27', 'rain_mm': 0.5, 'et0_mm': 3.64, 'temp_max_c': 27.5}
+
+IRRIGATION DECISION: WAIT (confidence low)
+data_timestamp: 2026-11-25T04:23:57.976770+00:00 | freshness: live
+ - Modelled soil water used so far is 15.8 mm, well below the trigger (52.0 mm), and is projected to stay below it for two days (10.2 mm). Forecast rain: 12.2 mm over today and tomorrow.
+ - Maize is 65 days after sowing, in the development stage (Kc 0.75).
+values: {"taw_mm": 104.0, "raw_trigger_mm": 52.0, "depletion_now_mm": 15.8, "projected_depletion_mm": [10.2, 10.1], "recent_rain_3d_mm": 11.2, "forecast_rain_2d_mm": 12.2, "kc": 0.75, "stage": "development", "days_after_sowing": 65, "refill_depth_mm": null, "window_start": "2026-11-18", "state_anchored": false}
+
+MANDI
+DATA_GOV_API_KEY not set - skipping the live mandi call (get a free key at data.gov.in).
