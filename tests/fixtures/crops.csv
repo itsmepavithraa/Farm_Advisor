@@ -1,0 +1,5 @@
+crop_name_en,crop_name_kn,aliases,kc_initial,kc_mid,kc_end,season,root_depth_m,source
+Ragi,ರಾಗಿ,finger millet;ragi;raagi;nachni,0.30,1.00,0.30,kharif,0.5,PLACEHOLDER approx FAO-56 (millet) - verify
+Maize,ಮೆಕ್ಕೆಜೋಳ,corn;maize;makke jola;mekkejola,0.30,1.20,0.60,kharif,0.8,PLACEHOLDER approx FAO-56 - verify
+Tomato,ಟೊಮೇಟೊ,tomato;tamatar;tomato;thakkali,0.60,1.15,0.80,rabi,0.6,PLACEHOLDER approx FAO-56 - verify
+Groundnut,ಕಡಲೆಕಾಯಿ,groundnut;peanut;kadalekai;mungfali,0.40,1.15,0.60,kharif,0.5,PLACEHOLDER approx FAO-56 - verify

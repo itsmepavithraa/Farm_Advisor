@@ -1,0 +1,17 @@
+crop,stage,start_day,end_day,kc
+Ragi,initial,0,19,0.30
+Ragi,development,20,49,0.65
+Ragi,mid,50,104,1.00
+Ragi,late,105,144,0.30
+Maize,initial,0,29,0.30
+Maize,development,30,69,0.75
+Maize,mid,70,119,1.20
+Maize,late,120,169,0.60
+Tomato,initial,0,29,0.60
+Tomato,development,30,69,0.88
+Tomato,mid,70,109,1.15
+Tomato,late,110,134,0.80
+Groundnut,initial,0,24,0.40
+Groundnut,development,25,59,0.78
+Groundnut,mid,60,104,1.15
+Groundnut,late,105,129,0.60

@@ -1,0 +1,20 @@
+{
+  "status": "ok",
+  "intent": "IRRIGATION",
+  "decision": "IRRIGATE_SOON",
+  "message_en": "Your maize will need water within two days. Irrigate tomorrow if no rain comes.",
+  "message_local": "ನಿಮ್ಮ ಮೆಕ್ಕೆಜೋಳಕ್ಕೆ ಎರಡು ದಿನಗಳಲ್ಲಿ ನೀರು ಬೇಕಾಗುತ್ತದೆ. ಮಳೆ ಬರದಿದ್ದರೆ ನಾಳೆ ನೀರು ಹಾಯಿಸಿ.",
+  "reasons": [
+    "Modelled soil water used so far is 41.0 mm, below the trigger (52.0 mm), but it is projected to reach 55.2 mm within two days.",
+    "Forecast rain over today and tomorrow is 0.5 mm.",
+    "Maize is 65 days after sowing, in the development stage (Kc 0.75)."
+  ],
+  "source": "Open-Meteo weather + modelled soil water balance (soil moisture is not measured)",
+  "data_timestamp": "2026-11-25T09:30:00+00:00",
+  "freshness": "live",
+  "confidence": "medium",
+  "assumptions": [
+    "Soil moisture is modelled from weather and crop data, not measured in your field."
+  ],
+  "audio_url": null
+}
